@@ -108,6 +108,7 @@
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Owin\AuthMiddleware.cs" />
+    <Compile Include="Providers\AuthProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

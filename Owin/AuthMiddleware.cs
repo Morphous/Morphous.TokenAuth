@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿using HttpAuth.Providers;
+using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Orchard.Owin;
 using Owin;
@@ -18,7 +19,7 @@ namespace HttpAuth.Owin {
                         var oAuthOptions = new OAuthAuthorizationServerOptions
                         {
                             TokenEndpointPath = new PathString("/Token"),
-                        //    Provider = new ApplicationOAuthProvider(PublicClientId),
+                            Provider = new AuthProvider(),
                         //    AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                             AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                             AllowInsecureHttp = true
