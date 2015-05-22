@@ -110,10 +110,10 @@
     <Compile Include="Owin\AuthMiddleware.cs" />
     <Compile Include="Providers\AuthProvider.cs" />
     <Compile Include="Routes.cs" />
+    <Compile Include="TransferModels\AccountBindingModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
-    <Folder Include="TransferModels\" />
     <Folder Include="Views\" />
   </ItemGroup>
   <ItemGroup>
