@@ -11,5 +11,11 @@ namespace HttpAuth.Controllers {
 
             return "test";
         }
+
+        [HttpGet]
+        public void Register() {
+            int i = 5;
+            int t = i;
+        }
     }
 }
