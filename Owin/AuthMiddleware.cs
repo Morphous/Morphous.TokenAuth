@@ -12,10 +12,10 @@ using System.Web;
 
 namespace HttpAuth.Owin {
     public class AuthMiddleware : IOwinMiddlewareProvider {
-        private readonly Work<IMembershipService> _membershipServiceWork;
+        private readonly IMembershipService _membershipService;
 
-        public AuthMiddleware(Work<IMembershipService> membershipServiceWork) {
-            _membershipServiceWork = membershipServiceWork;
+        public AuthMiddleware(IMembershipService membershipService) {
+            _membershipService = membershipService;
         }
 
         public IEnumerable<OwinMiddlewareRegistration> GetOwinMiddlewares() {
@@ -26,15 +26,14 @@ namespace HttpAuth.Owin {
                         var oAuthOptions = new OAuthAuthorizationServerOptions
                         {
                             TokenEndpointPath = new PathString("/Token"),
-                            Provider = new AuthProvider(_membershipServiceWork),
-                        //    AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
+                            Provider = new AuthProvider(_membershipService),
                             AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                             AllowInsecureHttp = true
                         };
 
                         // Enable the application to use bearer tokens to authenticate users
                         app.UseOAuthAuthorizationServer(oAuthOptions);
-                        app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());                        
+                        app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
                     }
                 }
             };

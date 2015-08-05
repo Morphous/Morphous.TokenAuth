@@ -1,10 +1,6 @@
 ﻿using HttpAuth.TransferModels;
 using Orchard.Localization;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using Orchard.Users.Services;
 using Orchard.Users.Models;
