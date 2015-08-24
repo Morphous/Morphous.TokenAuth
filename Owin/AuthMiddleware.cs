@@ -12,10 +12,10 @@ using System.Web;
 
 namespace HttpAuth.Owin {
     public class AuthMiddleware : IOwinMiddlewareProvider {
-        private readonly IMembershipService _membershipService;
+        private readonly Work<IMembershipService> _membershipServiceWork;
 
-        public AuthMiddleware(IMembershipService membershipService) {
-            _membershipService = membershipService;
+        public AuthMiddleware(Work<IMembershipService> membershipServiceWork) {
+            _membershipServiceWork = membershipServiceWork;
         }
 
         public IEnumerable<OwinMiddlewareRegistration> GetOwinMiddlewares() {
@@ -26,7 +26,7 @@ namespace HttpAuth.Owin {
                         var oAuthOptions = new OAuthAuthorizationServerOptions
                         {
                             TokenEndpointPath = new PathString("/Token"),
-                            Provider = new AuthProvider(_membershipService),
+                            Provider = new AuthProvider(_membershipServiceWork),
                             AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                             AllowInsecureHttp = true
                         };

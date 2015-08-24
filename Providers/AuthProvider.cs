@@ -10,10 +10,10 @@ using System.Web;
 
 namespace HttpAuth.Providers {
     public class AuthProvider : OAuthAuthorizationServerProvider {
-        private readonly IMembershipService _membershipService;
+        private readonly Work<IMembershipService> _membershipServiceWork;
 
-        public AuthProvider(IMembershipService membershipService) {
-            _membershipService = membershipService;
+        public AuthProvider(Work<IMembershipService> membershipServiceWork) {
+            _membershipServiceWork = membershipServiceWork;
         }
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context) {
@@ -23,8 +23,8 @@ namespace HttpAuth.Providers {
 
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-
-            var user = _membershipService.ValidateUser(context.UserName, context.Password);
+            
+            var user = _membershipServiceWork.Value.ValidateUser(context.UserName, context.Password);
             if (user == null) {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
             } else {
