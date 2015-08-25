@@ -1,4 +1,5 @@
 ﻿using Microsoft.Owin.Security.OAuth;
+using Orchard;
 using Orchard.Environment;
 using Orchard.Security;
 using System;
@@ -10,10 +11,12 @@ using System.Web;
 
 namespace HttpAuth.Providers {
     public class AuthProvider : OAuthAuthorizationServerProvider {
-        private readonly Work<IMembershipService> _membershipServiceWork;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
-        public AuthProvider(Work<IMembershipService> membershipServiceWork) {
-            _membershipServiceWork = membershipServiceWork;
+        public AuthProvider(
+            IWorkContextAccessor workContextAccessor) {
+
+            _workContextAccessor = workContextAccessor;
         }
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context) {
@@ -23,8 +26,9 @@ namespace HttpAuth.Providers {
 
         public override Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context) {
             context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { "*" });
-            
-            var user = _membershipServiceWork.Value.ValidateUser(context.UserName, context.Password);
+            var membershipService = _workContextAccessor.GetContext().Resolve<IMembershipService>();
+
+            var user = membershipService.ValidateUser(context.UserName, context.Password);
             if (user == null) {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
             } else {

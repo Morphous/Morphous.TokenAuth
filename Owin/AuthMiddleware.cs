@@ -4,6 +4,7 @@ using Microsoft.Owin.Security.OAuth;
 using Orchard.Environment;
 using Orchard.Owin;
 using Orchard.Security;
+using Orchard;
 using Owin;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,12 @@ using System.Web;
 
 namespace HttpAuth.Owin {
     public class AuthMiddleware : IOwinMiddlewareProvider {
-        private readonly Work<IMembershipService> _membershipServiceWork;
+        private readonly IWorkContextAccessor _workContextAccessor;
 
-        public AuthMiddleware(Work<IMembershipService> membershipServiceWork) {
-            _membershipServiceWork = membershipServiceWork;
+        public AuthMiddleware(
+            IWorkContextAccessor workContextAccessor) {
+
+            _workContextAccessor = workContextAccessor;
         }
 
         public IEnumerable<OwinMiddlewareRegistration> GetOwinMiddlewares() {
@@ -26,7 +29,7 @@ namespace HttpAuth.Owin {
                         var oAuthOptions = new OAuthAuthorizationServerOptions
                         {
                             TokenEndpointPath = new PathString("/Token"),
-                            Provider = new AuthProvider(_membershipServiceWork),
+                            Provider = new AuthProvider(_workContextAccessor),
                             AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                             AllowInsecureHttp = true
                         };
@@ -34,6 +37,21 @@ namespace HttpAuth.Owin {
                         // Enable the application to use bearer tokens to authenticate users
                         app.UseOAuthAuthorizationServer(oAuthOptions);
                         app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+                    }
+                },
+                new OwinMiddlewareRegistration {
+                    Priority = "2",
+                    Configure = app => {
+                        app.Use(async (context, next) => {
+                            var workContext = _workContextAccessor.GetContext();
+                            var authenticationService = workContext.Resolve<IAuthenticationService>();
+                            var membershipService = workContext.Resolve<IMembershipService>();
+                            
+                            var orchardUser = membershipService.GetUser(context.Request.User.Identity.Name);
+                            authenticationService.SetAuthenticatedUserForRequest(orchardUser);
+
+                            await next();
+                        });
                     }
                 }
             };
