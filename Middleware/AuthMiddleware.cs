@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HttpAuth.Owin {
+namespace HttpAuth.Middleware {
     public class AuthMiddleware : IOwinMiddlewareProvider {
         private readonly IWorkContextAccessor _workContextAccessor;
 

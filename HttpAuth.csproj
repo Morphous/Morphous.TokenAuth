@@ -111,7 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Owin\AuthMiddleware.cs" />
+    <Compile Include="Middleware\AuthMiddleware.cs" />
     <Compile Include="Providers\AuthProvider.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="TransferModels\AccountBindingModels.cs" />
