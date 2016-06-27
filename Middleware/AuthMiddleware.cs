@@ -1,4 +1,4 @@
-﻿using HttpAuth.Providers;
+﻿using Morphous.TokenAuth.Providers;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.OAuth;
 using Orchard.Environment;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace HttpAuth.Middleware {
+namespace Morphous.TokenAuth.Middleware {
     public class AuthMiddleware : IOwinMiddlewareProvider {
         private readonly IWorkContextAccessor _workContextAccessor;
 

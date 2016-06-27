@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace HttpAuth.Providers {
+namespace Morphous.TokenAuth.Providers {
     public class AuthProvider : OAuthAuthorizationServerProvider {
         private readonly IWorkContextAccessor _workContextAccessor;
 

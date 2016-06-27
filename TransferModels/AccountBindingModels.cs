@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace HttpAuth.TransferModels {
+namespace Morphous.TokenAuth.TransferModels {
     public class RegisterBindingModel {
         [Required]
         [Display(Name = "Email")]

@@ -1,4 +1,4 @@
-﻿Name: HttpAuth
+﻿Name: Morphous.TokenAuth
 AntiForgery: enabled
 Author: The Orchard Team
 Website: http://orchardproject.net
@@ -6,5 +6,5 @@ Version: 1.0
 OrchardVersion: 1.0
 Description: Description for the module
 Features:
-    HttpAuth:
-        Description: Description for feature HttpAuth.
+    Morphous.TokenAuth:
+        Description: Description for feature Morphous.TokenAuth.

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Http;
 
-namespace HttpAuth {
+namespace Morphous.TokenAuth {
     public class HttpRoutes : IHttpRouteProvider {
 
         public void GetRoutes(ICollection<RouteDescriptor> routes) {
@@ -21,7 +21,7 @@ namespace HttpAuth {
                     Priority = 5,
                     RouteTemplate = "api/account/{action}/{id}",
                     Defaults = new {
-                        area = "HttpAuth",
+                        area = "Morphous.TokenAuth",
                         controller = "Account",
                         id = RouteParameter.Optional
                     }

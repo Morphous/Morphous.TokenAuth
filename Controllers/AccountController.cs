@@ -1,4 +1,4 @@
-﻿using HttpAuth.TransferModels;
+﻿using Morphous.TokenAuth.TransferModels;
 using Orchard.Localization;
 using System;
 using System.Web.Http;
@@ -6,7 +6,7 @@ using Orchard.Users.Services;
 using Orchard.Users.Models;
 using Orchard.Security;
 
-namespace HttpAuth.Controllers {
+namespace Morphous.TokenAuth.Controllers {
     [Authorize]
     public class AccountController : ApiController {
         private readonly IMembershipService _membershipService;
