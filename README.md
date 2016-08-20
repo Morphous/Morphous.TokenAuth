@@ -1,4 +1,4 @@
-# HttpAuth
+# TokenAuth
 Orchard module allowing users to authenticate with Tokens instead of Cookies.
 
 Described here in the blog post
